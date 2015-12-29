@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Produto Loja virtual</title>
+                <link href="resources/css/default.css" rel="stylesheet" type="text/css"/>
+                <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    <div id="top">
+                        <h2>Loja Virtual</h2>
+                    </div>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="40" closable="true" collapsible="true">
+                    <div id="rodape">
+                        <div id="contRodape">
+                            <b>Todos os direitos são reservados à Foxconn Informática!  </b>                    
+                            <b>Desenvolvido por <a href="http://www.foxconnect.com.br" target="_blank">Foxconn informática.</a></b>                    
+                        </div>
+                    </div>  
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <div id="centroCadastro">
+                        <h:form>
+                            <p:growl id="msg" />
+                            <p:panel header="Cadastro " style="width: 70%" >
+                                <h:panelGrid columns="2" style="width: 70%;">
+                                    <p:outputLabel value="Cnpj" for="cnpj" />
+                                    <p:inputText value="#{bEmp.cnpjForcli}" required="true" size="20" style="background: #fff; color: #000" 
+                                                 requiredMessage="Campo Cnpj Obrigátorio!" id="cnpj" />
+                                    <p:outputLabel value="Razão Social" for="razao"/>
+                                    <p:inputText value="#{bEmp.razao}" id="razao" required="true" size="40"  style="background: #fff; color: #000"
+                                                 requiredMessage="Campo Razão Social Obrigátorio!" />
+                                    <p:outputLabel value="Endereço" for="endereco" />
+                                    <p:inputText value="#{bEmp.endereco}" id="endereco" required="true" size="40" style="background: #fff; color: #000"
+                                                 requiredMessage="Campo Endereço Obrigátorio!" />
+                                    <p:outputLabel value="Complemento" for="complemento"/>
+                                    <p:inputText value="#{bEmp.complemento}" id="complemento" size="40" style="background: #fff; color: #000" />                                    
+                                    <p:outputLabel value="Bairro" for="bairro" />
+                                    <p:inputText value="#{bEmp.bairro}" id="bairro" required="true" size="40" style="background: #fff; color: #000"
+                                                 requiredMessage="Campo Bairro Obrigátorio!" />
+                                    <p:outputLabel value="Cep" for="cep"/>
+                                    <p:inputText value="#{bEmp.cep}" id="cep" size="20" style="background: #fff; color: #000"/>
+                                    <p:outputLabel value="DDD/Telefone" />
+                                    <p:inputText value="#{bEmp.telCelular}" style="background: #fff; color: #000" />
+                                    
+                                    <p:outputLabel value="Estado" />    
+                                    <p:selectOneMenu  filter="true" >
+                                        <f:selectItem itemLabel="Selecione" />
+                                        <f:selectItems   />                                    
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="Cidade" />    
+                                    <p:selectOneMenu   id="cidade"  filter="true">
+                                        <f:selectItem itemLabel="Selecione" />
+                                        <f:selectItems   />
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="Email" for="email"/>
+                                    <p:inputText value="#{bEmp.email}" id="email" autocomplete="false" size="40" style="background: #fff; color: #000" />
+
+                                    <p:outputLabel value="Senha"/>
+                                    <p:password feedback="true" value="#{bUsuario.senha}"  maxlength="14" required="true" requiredMessage="Campo Senha e Obrigatório!"
+                                                promptLabel="Digite uma senha Segura." label="Fraca" goodLabel="Boa" weakLabel="Razoavel" strongLabel="Excelente"  style="background: #fff; color: #000" />
+
+                                    <p:outputLabel value="Confirma Senha" />
+                                    <p:password feedback="true"  value="#{bUsuario.senha2}" maxlength="14" required="true" requiredMessage="Campo Confirma Senha e Obrigatório!"
+                                                promptLabel="Digite uma senha Segura." label="Fraca" goodLabel="Boa" weakLabel="Razoavel" strongLabel="Excelente"  style="background: #fff; color: #000" />
+
+                                    
+                                    <p:commandButton value="Cadastrar" action="#{mbEmpresa.cadastrar(bEmp, bUsuario.senha, bUsuario.senha2)}" 
+                                                     oncomplete="reset()" update="msg" style="width: 120px;" />
+                                    <p:commandButton value="Limpar" onclick="form.reset()" style="width: 120px;" />
+                                </h:panelGrid>
+                            </p:panel>
+                        </h:form>
+                    </div>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Cadastrar Produto</title>
+                <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+                <link href="../resources/css/default.css" rel="stylesheet" type="text/css"/>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    <div id="top">  
+                        <h2>Loja Virtual</h2>
+                    </div>                                        
+                </p:layoutUnit>
+
+                
+                
+                <p:layoutUnit position="south" size="40" closable="true" collapsible="true">
+                    <div id="rodape">
+                        <div id="contRodape">
+                            <b>Todos os direitos são reservados à Foxconn Informática!  </b>                    
+                            <b>Desenvolvido por <a href="http://www.foxconnect.com.br" target="_blank">Foxconn informática.</a></b>                    
+                        </div>
+                    </div>  
+                </p:layoutUnit>
+
+                
+                
+                <p:layoutUnit position="west" size="275" header="Administrador" collapsible="true">
+                    <h:form>
+                        <p:slideMenu model="#{mbMenu.geraMenu(mbusuario.usuario)}" style="width: 250px" />
+                        <p:menu style="width: 250px">
+                            <p:menuitem action="#{mbusuario.sair()}" value="Sair" icon="ui-icon-home" />
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                
+                
+                <p:layoutUnit position="center">
+                    <h:form id="form">
+                        <p:panel>
+                            <p:outputLabel value="Seja bem vindo," />
+                            <b><p:outputLabel value="#{mbusuario.razao}" style="font-size: 14px;" /></b>
+                        </p:panel>
+                        <br />
+                        <p:growl id="msg"/>
+                        <p:panel header="Cadastro de Produto">
+                            <table>
+                                <tr>
+                                    <td><p:outputLabel value="Código do produto" /></td>
+                                    <td colspan="2">
+                                        <p:inputText value="#{BeanProduto.codProduto}" style="background: #fff; color: #000" required="true" size="10" requiredMessage="Campo Código do produto obrigatório!" >
+                                            <p:ajax event="blur" listener="#{BeanProduto.pesqCodProd()}" update=":form" />
+                                        </p:inputText>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><p:outputLabel value="Descrição"/></td>
+                                    <td colspan="2"><p:inputText value="#{BeanProduto.descricao}" required="true" size="50" style="background: #fff; color: #000" requiredMessage="Campo é Descrição obrigatório!" /></td>
+                                </tr>
+                                <tr>
+                                    <td><p:outputLabel value="Valor do Produto"/></td>
+                                    <td colspan="2"><p:inputText value="#{BeanProduto.vlUnitario}" onclick="this.value = ''" required="true" size="10" style="background: #fff; color: #000" requiredMessage="Campo é Valor do Produto obrigatório!" />                                </td>
+                                </tr>
+                                <tr>
+                                    <td><p:outputLabel value="Categoria"/></td>
+                                    <td colspan="2">
+                                        <p:inputText value="#{BeanProduto.categoria}" required="true" size="10" style="background: #fff; color: #000" requiredMessage="Campo é Categoria obrigatório!" >
+                                            <p:ajax event="blur" listener="#{BeanProduto.pesqCategoria()}"  update=":form:descCategoria" />
+                                        </p:inputText> 
+                                        <p:inputText id="descCategoria" value="#{BeanProduto.descCategoria}"  style="background: #fff; color: #000" size="50" />
+                                    </td> 
+                                </tr>
+                                <tr>
+                                    <td> <p:commandButton icon="ui-icon-disk" value="Inserir" action="#{mbProduto.gravar(BeanProduto)}" oncomplete="reset()"
+                                                          update="msg, form" style="width: 120px" /> </td>
+                                    <td colspan="2">
+                                        <p:commandButton value="Limpar" onclick="reset()" actionListener="#{BeanProduto.limpar()}" style="width: 120px" ajax="false" /> 
+                                        <p:commandButton value="Alterar" action="#{mbProduto.alterar(BeanProduto.codProduto, BeanProduto.descCategoria,
+                                                                                   BeanProduto.categoria, BeanProduto.descricao, BeanProduto.vlUnitario)}" update="msg, form" style="width: 120px" oncomplete="document.reset()" />  
+                                    </td>
+                                </tr>
+                            </table>                            
+                            <br />
+
+                            <!--Tabela para mostrar produtos-->
+                            <p:dataTable paginator="true" var="produto" rows="10" value="#{mbProduto.consultar()}" widgetVar="prod"
+                                         emptyMessage="Não há produtos cadastrados" >
+                                <p:column filterBy="#{produto.codProduto}"  headerText="Código do produto" width="140px;">
+                                    <p:outputLabel value="#{produto.codProduto}" />
+                                </p:column>
+                                <p:column filterBy="#{produto.descricao}" headerText="Descrição">
+                                    <p:outputLabel value="#{produto.descricao}" />
+                                </p:column>
+                                <p:column filterBy="#{produto.vlUnitario}" headerText="Valor Unitário" width="115px;" style="text-align: center">
+                                    <p:outputLabel value="#{produto.vlUnitario}" />
+                                </p:column>
+                                <p:column filterBy="#{produto.categoria}" headerText="Categoria" style="text-align: center;" width="115px;">
+                                    <p:outputLabel value="#{produto.categoria}"  />
+                                </p:column>     
+                                <p:column headerText="Excluir" width="115px;" style="text-align: center;">
+                                    <p:commandButton icon="ui-icon-circle-close"  action="#{mbProduto.excluir(produto.codProduto)}" ajax="false"  />
+                                </p:column>                                
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+                </p:layoutUnit>
+            </p:layout>
+        </h:body>
+    </f:view>
+</html>
+

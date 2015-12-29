@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Produto Loja virtual</title>
+                <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+                <link href="../resources/css/default.css" rel="stylesheet" type="text/css"/>                
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    <div id="top">
+                        <h2>Loja Virtual</h2>
+                    </div>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="40" closable="true" collapsible="true">
+                    <div id="rodape">
+                        <div id="contRodape">
+                            <b>Todos os direitos são reservados à Foxconn Informática!  </b>                    
+                            <b>Desenvolvido por <a href="http://www.foxconnect.com.br" target="_blank">Foxconn informática.</a></b>                    
+                        </div>
+                    </div>                                                          
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="275" header="Produtos" collapsible="true">
+                    <h:form>
+                        <p:slideMenu model="#{mbMenu.geraMenu(mbusuario.usuario)}" style="width: 250px">                            
+                        </p:slideMenu>
+                        <p:menu style="width: 250px">
+                            <p:menuitem action="#{mbusuario.sair()}" value="Sair" icon="ui-icon-home" />
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">                    
+                    <p:panel>
+                        <p:outputLabel value="Seja bem vindo," />
+                        <b><p:outputLabel value="#{mbusuario.razao}" style="font-size: 14px;" /></b>
+                        <br />                        
+                        <h:form id="form">
+                            <p:growl id="msg" />
+                            <p:panel header="Cadastro de condição de pagamento">
+                                <table>                                    
+                                    <tr>
+                                        <td><p:outputLabel value="Descrição Condição de Pagamento" /> </td>
+                                        <td colspan="2"><p:inputText value="#{bCondPagamento.descricao}" size="50" required="true" requiredMessage="Campo descrição de condição de pagamento é obrigátorio" /> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><p:outputLabel value="Prazo de Vencimento" /> </td>
+                                        <td colspan="2"> <p:inputText value="#{bCondPagamento.prazoVenc}" size="10" required="true" requiredMessage="Campo prazo de vencimento é obrigátorio" /> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><p:outputLabel value="Quantidade de parcela" /> </td>
+                                        <td colspan="2"><p:inputText value="#{bCondPagamento.qtdParcela}" size="10" required="true" requiredMessage="Campo Quantidade de parcela é obrigátorio" />  </td>
+                                    </tr>                                    
+                                    <tr>
+                                        <td><p:commandButton value="Inserir" action="#{mbCondPagamento.Gravar(bCondPagamento)}" oncomplete="form.reset()" update="msg , form"  style="width: 120px" /> </td>
+                                        <td><p:commandButton value="Alterar" style="width: 120px" /> </td>
+                                        <td><p:commandButton value="Limpar" onclick="form.reset()" style="width: 120px" /> </td>
+                                    </tr>
+                                </table>
+                                
+                                
+                                <br />
+                                <p:dataTable var="tabela" value="#{mbCondPagamento.consultar()}" rows="10" >
+                                    <p:column headerText="Código Condição de Pagamento">
+                                        <p:outputLabel value="#{tabela.idcondPagamento}" />
+                                    </p:column>
+                                    <p:column headerText="Descrição">
+                                        <p:outputLabel value="#{tabela.descricao}" />
+                                    </p:column>
+                                    <p:column headerText="Prazo de vencimento">
+                                        <p:outputLabel value="#{tabela.prazoVenc}" />
+                                    </p:column>
+                                    <p:column headerText="Quantidade de parcela">
+                                        <p:outputLabel value="#{tabela.qtdParcela}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </h:form>
+                    </p:panel>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+
+
