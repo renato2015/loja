@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Loja virtual</title>
+    </h:head>
+    <h:body>
+        <h:form id="form" style="margin-left: 32%; margin-top: 13%;width: 42%;height: 40%;">
+            <p:cache region="testcache" key="panelGrid">
+                <p:growl id="msg"/>
+                <p:panel header="Acesso a  loja virtual"  >
+                    <h:panelGrid columns="3">
+                        <p:outputLabel value="Usuário"/>
+                        <p:inputText value="#{mbusuario.usuario}" size="14" required="true" requiredMessage="Campo usuário é obrigatório!" >
+                            <p:ajax event="blur" listener="#{mbusuario.consultarUsuario()}" update=":form:razao" />                        
+                        </p:inputText>                            
+                        
+                        <p:outputLabel id="razao" value="#{mbusuario.razao}" />
+                        <p:outputLabel value="Senha"/>
+                        <p:password value="#{mbusuario.senha}"   size="14" required="true" requiredMessage="Campo senha é obrigatório!" />                      
+                        <p:outputLabel />
+                        <p:commandButton value="Entrar" update="msg" action="#{mbusuario.logar()}" />
+                        <p:commandButton value="Limpar" onclick="form.reset()" />                    
+                    </h:panelGrid>
+                    <br />
+                    <p:outputLabel value="Não é cadastrado?Acesse o link para: " />
+                    <h:link outcome="cadastrar.xhtml" value="Cadastrar" />
+                </p:panel>
+            </p:cache>
+        </h:form>
+    </h:body>
+</html>
+

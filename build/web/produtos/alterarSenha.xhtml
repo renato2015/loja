@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Alterar Senha</title>
+                <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+                <link href="../resources/css/default.css" rel="stylesheet" type="text/css"/>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    <div id="top">  
+                        <h2>Loja Virtual</h2>
+                    </div>                                        
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="40" closable="true" collapsible="true">
+                    <div id="rodape">
+                        <div id="contRodape">
+                            <b>Todos os direitos são reservados à Foxconn Informática!  </b>                    
+                            <b>Desenvolvido por <a href="http://www.foxconnect.com.br" target="_blank">Foxconn informática.</a></b>                    
+                        </div>
+                    </div>  
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="275" header="Administrador" collapsible="true">
+                    <h:form>
+                        <p:slideMenu model="#{mbMenu.geraMenu(mbusuario.usuario)}" style="width: 260px" />
+                        <p:menu style="width: 250px">
+                            <p:menuitem action="#{mbusuario.sair()}" value="Sair" icon="ui-icon-home" />
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h:form>
+                        <p:growl id="msg" />
+                        <p:panel>
+                            <p:outputLabel value="Seja bem vindo," />
+                            <b><p:outputLabel value="#{mbusuario.razao}" style="font-size: 14px;" /></b>
+                        </p:panel>
+                        <br />
+                        <p:panel header="Alterar Senha" >
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Usuário" />
+                                <p:inputText value="#{mbusuario.razao}" disabled="true" size="40" style="color: #000000" />
+                                <p:outputLabel value="Senha autal" />
+                                <p:password value="#{bAlteraSenha.senhaVelha}" required="true" requiredMessage="Senha Atual é obrigatório!" />
+                                <p:outputLabel value="Nova Senha" />
+                                <p:password feedback="true" value="#{bAlteraSenha.senhanova1}" maxlength="14" promptLabel="Digite uma senha segura"
+                                            label="Fraca" goodLabel="Boa" weakLabel="Razoável" strongLabel="Excelente" required="true" requiredMessage="Senha Nova é obrigatório!" />
+                                <p:outputLabel value="Confirma Senha" />
+                                <p:password feedback="true" value="#{bAlteraSenha.senhanova2}" maxlength="14" promptLabel="Digite uma senha segura"
+                                            label="Fraca" goodLabel="Boa" weakLabel="Razoável" strongLabel="Excelente" required="true" requiredMessage="Senha Nova é obrigatório!" />
+                                <p:commandButton id="alterar" value="Alterar Senha" update="msg" oncomplete="reset()"
+                                                 action="#{mbusuario.alterarSenha(mbusuario.usuario, bAlteraSenha.senhanova1, bAlteraSenha.senhanova2, bAlteraSenha.senhaVelha)}"  />
+                                <p:commandButton id="limpar" value="Limpar" onclick="reset()" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:form>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

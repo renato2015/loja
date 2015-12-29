@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Pagina Adiminstrador</title>                
+                <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+                <link href="../resources/css/default.css" rel="stylesheet" type="text/css"/>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    <div id="top">  
+                        <h2>Loja Virtual</h2>
+                    </div>                                        
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="40" closable="true" collapsible="true">
+                    <div id="rodape">
+                        <div id="contRodape">
+                            <b>Todos os direitos são reservados à Foxconn Informática!  </b>                    
+                            <b>Desenvolvido por <a href="http://www.foxconnect.com.br" target="_blank">Foxconn informática.</a></b>                    
+                        </div>
+                    </div>  
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="275" header="Administrador" collapsible="true">
+                    <h:form>
+                        <p:slideMenu model="#{mbMenu.geraMenu(mbusuario.usuario)}" style="width: 250px">
+                        </p:slideMenu>
+                        <p:menu style="width: 250px">
+                            <p:menuitem action="#{mbusuario.sair()}" value="Sair" icon="ui-icon-home" />
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <p:panel>
+                        <p:outputLabel value="Seja bem vindo," />
+                        <b><p:outputLabel value="#{mbusuario.razao}" style="font-size: 14px;" /></b>
+                    </p:panel>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+
